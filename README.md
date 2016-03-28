@@ -1,2 +1,2 @@
 # JsSandbox
-Rhido based Javascript sandbox
+Rhino based Javascript sandbox
