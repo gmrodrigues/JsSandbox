@@ -23,12 +23,13 @@ public class JavaToNativeWrapFactory extends WrapFactory
         if (javaObject instanceof Map) {
             Map map = (Map) javaObject;
             return new ScriptableMap(scope, map);
-        } else if (javaObject instanceof List) {
+        }
+        else if (javaObject instanceof List) {
             List list = (List) javaObject;
             return new ScriptableList(scope, list);
-        } else {
+        }
+        else {
             return new NativeJavaObject(scope, javaObject, staticType);
         }
     }
-
 }

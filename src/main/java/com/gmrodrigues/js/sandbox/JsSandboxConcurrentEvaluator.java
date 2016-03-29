@@ -15,7 +15,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class JsSandboxConcurrentEvaluator implements
         JsSandboxEvaluator
 {
-
     private String source = "";
 
     private Map<String, File> maps = new ConcurrentHashMap<String, File>();
@@ -98,7 +97,6 @@ public class JsSandboxConcurrentEvaluator implements
     public void setScriptName(String scriptName)
     {
         this.scriptName = scriptName;
-
     }
 
     @Override
@@ -144,5 +142,4 @@ public class JsSandboxConcurrentEvaluator implements
         ThreadContext tc = getThreadContext();
         JsSandboxStaticEvaluator.loadJs(tc.cx, tc.scope, filename);
     }
-
 }

@@ -10,6 +10,8 @@ public class XmlToJsonConverter
 {
     private static final XMLSerializer xmlSerializer = new XMLSerializer();
 
+    private XmlToJsonConverter(){}
+
     public static JSON getJsonFromXmlFile(File fromFile)
     {
         JSON json = xmlSerializer.readFromFile(fromFile);

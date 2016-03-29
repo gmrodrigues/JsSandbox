@@ -13,7 +13,6 @@ import java.util.Map;
 
 public class JsSandboxFastEvaluator implements JsSandboxEvaluator
 {
-
     private String source = "";
 
     private Map<String, File> maps = new HashMap<String, File>();
@@ -106,5 +105,4 @@ public class JsSandboxFastEvaluator implements JsSandboxEvaluator
     {
         JsSandboxStaticEvaluator.loadJs(cx, scope, filename);
     }
-
 }

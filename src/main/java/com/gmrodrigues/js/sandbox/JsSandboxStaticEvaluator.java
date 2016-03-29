@@ -1,13 +1,5 @@
 package com.gmrodrigues.js.sandbox;
 
-import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.gmrodrigues.js.sandbox.util.XmlToJsonConverter;
 import net.sf.json.JSON;
 
@@ -23,9 +15,17 @@ import org.mozilla.javascript.commonjs.module.RequireBuilder;
 import org.mozilla.javascript.commonjs.module.provider.SoftCachingModuleScriptProvider;
 import org.mozilla.javascript.commonjs.module.provider.UrlModuleSourceProvider;
 
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 class JsSandboxStaticEvaluator
 {
-
+    private JsSandboxStaticEvaluator(){}
 
     public static Script compile(Context cx, Scriptable scope, Map<String, File> maps, List<File> requireDirList, String source, String scriptName)
     {
@@ -68,7 +68,8 @@ class JsSandboxStaticEvaluator
         try {
             Object result = script.exec(cx, scope);
             return result;
-        } catch (EcmaError e) {
+        }
+        catch (EcmaError e) {
             System.err.println(e.getMessage());
             int lineNum = e.getLineNumber();
             if (lineNum > 0) {
@@ -82,7 +83,8 @@ class JsSandboxStaticEvaluator
                             + scriptName
                             + "', cannot continue. To continue, set doContinueOnErrorAndClearItemset=true");
             System.exit(-1);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -112,8 +114,8 @@ class JsSandboxStaticEvaluator
             File file = maps.get(varname);
             JSON json = XmlToJsonConverter.getJsonFromXmlFile(file);
             scope.put(varname, scope, json);
-            String _element_ = json.toString();
-            scope.put("_" + varname + "_", scope, _element_);
+            String element = json.toString();
+            scope.put("_" + varname + "_", scope, element);
             continue;
         }
         return;

@@ -1,8 +1,7 @@
 package com.gmrodrigues.js.sandbox;
 
-import com.gmrodrigues.dirurils.DirUtils;
+import com.gmrodrigues.dirutils.DirUtils;
 import com.gmrodrigues.js.sandbox.annotation.JsScriptFuntion;
-
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.EvaluatorException;
 import org.mozilla.javascript.Function;
@@ -26,7 +25,6 @@ import java.util.Map;
 
 class JsScriptFunctionUtils extends ScriptableObject
 {
-
     private static final long serialVersionUID = 6913045431710599245L;
 
     public static final List<File> loadOnDirs = new ArrayList<File>();
@@ -75,7 +73,6 @@ class JsScriptFunctionUtils extends ScriptableObject
         }
     }
 
-
     @JsScriptFuntion
     public static Object readUrl(Context cx, Scriptable thisObj, Object[] args,
                                  Function funObj) throws IOException
@@ -115,7 +112,8 @@ class JsScriptFunctionUtils extends ScriptableObject
                         isInsideListedDirs = true;
                         break;
                     }
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     e.printStackTrace();
                     continue;
                 }
@@ -166,18 +164,22 @@ class JsScriptFunctionUtils extends ScriptableObject
                     if (result != Context.getUndefinedValue()) {
                         System.err.println(Context.toString(result));
                     }
-                } catch (WrappedException we) {
+                }
+                catch (WrappedException we) {
                     // Some form of exception was caught by JavaScript and
                     // propagated up.
                     System.err.println(we.getWrappedException().toString());
                     we.printStackTrace();
-                } catch (EvaluatorException ee) {
+                }
+                catch (EvaluatorException ee) {
                     // Some form of JavaScript error.
                     System.err.println("js: " + ee.getMessage());
-                } catch (JavaScriptException jse) {
+                }
+                catch (JavaScriptException jse) {
                     // Some form of JavaScript error.
                     System.err.println("js: " + jse.getMessage());
-                } catch (IOException ioe) {
+                }
+                catch (IOException ioe) {
                     System.err.println(ioe.toString());
                 }
                 boolean quitting = false;
@@ -187,11 +189,13 @@ class JsScriptFunctionUtils extends ScriptableObject
                 }
             } while (!hitEOF);
             System.err.println();
-        } else {
+        }
+        else {
             FileReader in = null;
             try {
                 in = new FileReader(filename);
-            } catch (FileNotFoundException ex) {
+            }
+            catch (FileNotFoundException ex) {
                 Context.reportError("Couldn't open file \"" + filename + "\".");
                 return;
             }
@@ -201,24 +205,28 @@ class JsScriptFunctionUtils extends ScriptableObject
                 // a script. Text is printed only if the print() function
                 // is called.
                 cx.evaluateReader(scope, in, filename, 1, null);
-            } catch (WrappedException we) {
+            }
+            catch (WrappedException we) {
                 System.err.println(we.getWrappedException().toString());
                 we.printStackTrace();
-            } catch (EvaluatorException ee) {
+            }
+            catch (EvaluatorException ee) {
                 System.err.println("js: " + ee.getMessage());
-            } catch (JavaScriptException jse) {
+            }
+            catch (JavaScriptException jse) {
                 System.err.println("js: " + jse.getMessage());
-            } catch (IOException ioe) {
+            }
+            catch (IOException ioe) {
                 System.err.println(ioe.toString());
-            } finally {
+            }
+            finally {
                 try {
                     in.close();
-                } catch (IOException ioe) {
+                }
+                catch (IOException ioe) {
                     System.err.println(ioe.toString());
                 }
             }
         }
     }
-
-
 }

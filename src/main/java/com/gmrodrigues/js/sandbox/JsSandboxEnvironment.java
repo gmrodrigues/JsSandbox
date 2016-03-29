@@ -1,7 +1,6 @@
 package com.gmrodrigues.js.sandbox;
 
 import com.gmrodrigues.js.sandbox.annotation.JsScriptFuntion;
-
 import com.gmrodrigues.js.sandbox.wrapper.JavaToNativeWrapFactory;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
@@ -15,7 +14,6 @@ import java.util.List;
 
 class JsSandboxEnvironment
 {
-
     public final com.gmrodrigues.js.sandbox.JsScriptFunctionUtils funcs = new com.gmrodrigues.js.sandbox.JsScriptFunctionUtils();
 
     static RuntimeException reportRuntimeError(String msgId)
@@ -76,5 +74,4 @@ class JsSandboxEnvironment
         }
         return cx;
     }
-
 }

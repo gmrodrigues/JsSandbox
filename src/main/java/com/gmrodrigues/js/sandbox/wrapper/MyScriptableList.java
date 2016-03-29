@@ -11,7 +11,6 @@ import java.util.ListIterator;
 
 public class MyScriptableList implements Scriptable, List
 {
-
     public final List<Object> list;
 
     public MyScriptableList()
@@ -185,7 +184,8 @@ public class MyScriptableList implements Scriptable, List
     {
         try {
             return list.get(new Integer(strIndex));
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             if ("length".equals(strIndex)) {
                 return list.size();
             }
@@ -241,7 +241,8 @@ public class MyScriptableList implements Scriptable, List
     {
         try {
             return has(Integer.valueOf(strIndex), arg1);
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             throw new InvalidParameterException("Attr " + strIndex + " does not exist in Object " + this.getClassName());
         }
     }
@@ -283,9 +284,7 @@ public class MyScriptableList implements Scriptable, List
     {
     }
 
-
     public void push()
     {
-
     }
 }

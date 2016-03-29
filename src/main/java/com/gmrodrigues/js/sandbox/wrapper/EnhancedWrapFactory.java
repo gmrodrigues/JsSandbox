@@ -21,9 +21,11 @@ public class EnhancedWrapFactory extends WrapFactory
     {
         if (javaObject instanceof Map) {
             return new NativeMapAdapter(scope, javaObject, staticType);
-        } else if (javaObject instanceof List) {
+        }
+        else if (javaObject instanceof List) {
             return new NativeListAdapter(scope, javaObject, staticType);
-        } else {
+        }
+        else {
             return new NativeJavaObject(scope, javaObject, staticType);
         }
     }
@@ -45,7 +47,8 @@ public class EnhancedWrapFactory extends WrapFactory
         {
             try {
                 getMap().remove(name);
-            } catch (RuntimeException e) {
+            }
+            catch (RuntimeException e) {
                 Context.throwAsScriptRuntimeEx(e);
             }
         }
@@ -84,7 +87,8 @@ public class EnhancedWrapFactory extends WrapFactory
             try {
                 getMap().put(name,
                         Context.jsToJava(value, ScriptRuntime.ObjectClass));
-            } catch (RuntimeException e) {
+            }
+            catch (RuntimeException e) {
                 Context.throwAsScriptRuntimeEx(e);
             }
         }
@@ -112,7 +116,8 @@ public class EnhancedWrapFactory extends WrapFactory
         {
             try {
                 getList().remove(index);
-            } catch (RuntimeException e) {
+            }
+            catch (RuntimeException e) {
                 throw Context.throwAsScriptRuntimeEx(e);
             }
         }
@@ -123,7 +128,8 @@ public class EnhancedWrapFactory extends WrapFactory
             try {
                 return cx.getWrapFactory().wrap(cx, this, getList().get(index),
                         null);
-            } catch (RuntimeException e) {
+            }
+            catch (RuntimeException e) {
                 throw Context.throwAsScriptRuntimeEx(e);
             }
         }
@@ -153,7 +159,8 @@ public class EnhancedWrapFactory extends WrapFactory
             try {
                 getList().set(index,
                         Context.jsToJava(value, ScriptRuntime.ObjectClass));
-            } catch (RuntimeException e) {
+            }
+            catch (RuntimeException e) {
                 Context.throwAsScriptRuntimeEx(e);
             }
         }
@@ -163,5 +170,4 @@ public class EnhancedWrapFactory extends WrapFactory
             return javaObject.toString();
         }
     }
-
 }
