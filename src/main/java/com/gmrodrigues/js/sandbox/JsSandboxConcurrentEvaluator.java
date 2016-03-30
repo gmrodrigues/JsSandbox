@@ -35,7 +35,7 @@ public class JsSandboxConcurrentEvaluator implements
             env = new JsSandboxEnvironment();
             cx = env.getContext();
             scope = env.getScope();
-            script = JsSandboxStaticEvaluator.compile(cx, scope, maps,
+            script = JsSandboxEvaluators.compile(cx, scope, maps,
                     requireDirList, source, scriptName);
         }
     }
@@ -63,28 +63,28 @@ public class JsSandboxConcurrentEvaluator implements
     public void putVar(String name, Object object)
     {
         ThreadContext tc = getThreadContext();
-        JsSandboxStaticEvaluator.putVar(tc.scope, name, object);
+        JsSandboxEvaluators.putVar(tc.scope, name, object);
     }
 
     @Override
     public <T> T getVar(String name)
     {
         ThreadContext tc = getThreadContext();
-        return JsSandboxStaticEvaluator.<T>getVar(tc.scope, name);
+        return JsSandboxEvaluators.<T>getVar(tc.scope, name);
     }
 
     @Override
     public void addClass(Class clazz) throws IllegalAccessException, InstantiationException, InvocationTargetException
     {
         ThreadContext tc = getThreadContext();
-        JsSandboxStaticEvaluator.addClass(tc.scope, clazz);
+        JsSandboxEvaluators.addClass(tc.scope, clazz);
     }
 
     @Override
     public Object exec()
     {
         ThreadContext tc = getThreadContext();
-        return JsSandboxStaticEvaluator.exec(tc.script, tc.cx, tc.scope, source, scriptName);
+        return JsSandboxEvaluators.exec(tc.script, tc.cx, tc.scope, source, scriptName);
     }
 
     @Override
@@ -126,20 +126,20 @@ public class JsSandboxConcurrentEvaluator implements
     @Override
     public void addXmlMapFile(String varname, File file)
     {
-        JsSandboxStaticEvaluator.addXmlMapFile(varname, file, maps);
+        JsSandboxEvaluators.addXmlMapFile(varname, file, maps);
     }
 
     @Override
     public void addRequirePath(File dir)
     {
         ThreadContext tc = getThreadContext();
-        JsSandboxStaticEvaluator.addRequirePath(dir, tc.env.funcs.loadOnDirs, requireDirList);
+        JsSandboxEvaluators.addRequirePath(dir, tc.env.funcs.loadOnDirs, requireDirList);
     }
 
     @Override
     public void loadJs(String filename)
     {
         ThreadContext tc = getThreadContext();
-        JsSandboxStaticEvaluator.loadJs(tc.cx, tc.scope, filename);
+        JsSandboxEvaluators.loadJs(tc.cx, tc.scope, filename);
     }
 }

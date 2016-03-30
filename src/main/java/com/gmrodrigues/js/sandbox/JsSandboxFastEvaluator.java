@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class JsSandboxFastEvaluator implements JsSandboxEvaluator
 {
+    private static JsSandboxEvaluator instance;
     private String source = "";
 
     private Map<String, File> maps = new HashMap<String, File>();
@@ -24,28 +25,39 @@ public class JsSandboxFastEvaluator implements JsSandboxEvaluator
     private Scriptable scope = env.getScope();
     private Script script;
 
+
+    private JsSandboxFastEvaluator(){}
+
+    public static JsSandboxEvaluator getInstance()
+    {
+        if (instance == null){
+            instance = new JsSandboxFastEvaluator();
+        }
+        return instance;
+    }
+
     private void compile()
     {
-        script = JsSandboxStaticEvaluator.compile(cx, scope, maps, requireDirList, source, scriptName);
+        script = JsSandboxEvaluators.compile(cx, scope, maps, requireDirList, source, scriptName);
     }
 
     @Override
     public void putVar(String name, Object object)
     {
-        JsSandboxStaticEvaluator.putVar(scope, name, object);
+        JsSandboxEvaluators.putVar(scope, name, object);
     }
 
     @Override
     public <T> T getVar(String name)
     {
-        return JsSandboxStaticEvaluator.<T>getVar(scope, name);
+        return JsSandboxEvaluators.<T>getVar(scope, name);
     }
 
     @Override
     public void addClass(Class clazz) throws IllegalAccessException,
             InstantiationException, InvocationTargetException
     {
-        JsSandboxStaticEvaluator.addClass(scope, clazz);
+        JsSandboxEvaluators.addClass(scope, clazz);
     }
 
     @Override
@@ -54,7 +66,7 @@ public class JsSandboxFastEvaluator implements JsSandboxEvaluator
         if (script == null) {
             compile();
         }
-        return JsSandboxStaticEvaluator.exec(script, cx, scope, source, scriptName);
+        return JsSandboxEvaluators.exec(script, cx, scope, source, scriptName);
     }
 
     @Override
@@ -91,18 +103,18 @@ public class JsSandboxFastEvaluator implements JsSandboxEvaluator
     @Override
     public void addXmlMapFile(String varname, File file)
     {
-        JsSandboxStaticEvaluator.addXmlMapFile(varname, file, maps);
+        JsSandboxEvaluators.addXmlMapFile(varname, file, maps);
     }
 
     @Override
     public void addRequirePath(File dir)
     {
-        JsSandboxStaticEvaluator.addRequirePath(dir, env.funcs.loadOnDirs, requireDirList);
+        JsSandboxEvaluators.addRequirePath(dir, env.funcs.loadOnDirs, requireDirList);
     }
 
     @Override
     public void loadJs(String filename)
     {
-        JsSandboxStaticEvaluator.loadJs(cx, scope, filename);
+        JsSandboxEvaluators.loadJs(cx, scope, filename);
     }
 }

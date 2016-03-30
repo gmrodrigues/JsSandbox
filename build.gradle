@@ -11,6 +11,7 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.13'
     testCompile 'junit:junit:4.12'
 
+    compile 'xom:xom:1.2.5'
     compile 'net.sf.json-lib:json-lib:2.4:jdk15'
     compile 'org.mozilla:rhino:1.7.7.1'
     compile 'io.ejs:ringojs:0.11.0'

@@ -23,9 +23,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-class JsSandboxStaticEvaluator
+class JsSandboxEvaluators
 {
-    private JsSandboxStaticEvaluator(){}
+    private JsSandboxEvaluators(){}
 
     public static Script compile(Context cx, Scriptable scope, Map<String, File> maps, List<File> requireDirList, String source, String scriptName)
     {
@@ -45,7 +45,7 @@ class JsSandboxStaticEvaluator
     {
         Object o = scope.get(name, scope);
         if (o instanceof Map) {
-            Map nativeResult = (Map) scope.get("itemset", scope);
+            Map nativeResult = (Map) scope.get(name, scope);
             Map mappedResult = new LinkedHashMap();
             mappedResult.putAll(nativeResult);
             return (T) mappedResult;
