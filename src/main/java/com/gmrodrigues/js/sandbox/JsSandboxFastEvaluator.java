@@ -24,7 +24,6 @@ public class JsSandboxFastEvaluator implements JsSandboxEvaluator
     private Scriptable scope = env.getScope();
     private Script script;
 
-
     private JsSandboxFastEvaluator(){}
 
     public static JsSandboxEvaluator newInstance()

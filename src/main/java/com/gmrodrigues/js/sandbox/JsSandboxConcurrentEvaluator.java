@@ -23,7 +23,9 @@ public class JsSandboxConcurrentEvaluator implements
 
     private Map<String, ThreadContext> threadContexts = new ConcurrentHashMap<String, ThreadContext>();
 
-    private JsSandboxConcurrentEvaluator(){}
+    private JsSandboxConcurrentEvaluator()
+    {
+    }
 
     public static JsSandboxEvaluator newInstance()
     {
@@ -81,7 +83,7 @@ public class JsSandboxConcurrentEvaluator implements
     public Object exec()
     {
         ThreadContext tc = getThreadContext();
-        if(tc.script == null){
+        if (tc.script == null) {
             tc.script = JsSandboxEvaluators.compile(tc.cx, tc.scope, maps,
                     requireDirList, source, scriptName);
         }
