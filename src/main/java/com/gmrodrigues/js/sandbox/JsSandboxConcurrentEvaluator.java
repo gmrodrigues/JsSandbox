@@ -23,6 +23,13 @@ public class JsSandboxConcurrentEvaluator implements
 
     private Map<String, ThreadContext> threadContexts = new ConcurrentHashMap<String, ThreadContext>();
 
+    private JsSandboxConcurrentEvaluator(){}
+
+    public static JsSandboxEvaluator newInstance()
+    {
+        return new JsSandboxConcurrentEvaluator();
+    }
+
     public class ThreadContext
     {
         public JsSandboxEnvironment env;
@@ -35,8 +42,6 @@ public class JsSandboxConcurrentEvaluator implements
             env = new JsSandboxEnvironment();
             cx = env.getContext();
             scope = env.getScope();
-            script = JsSandboxEvaluators.compile(cx, scope, maps,
-                    requireDirList, source, scriptName);
         }
     }
 
@@ -45,18 +50,10 @@ public class JsSandboxConcurrentEvaluator implements
         String tname = Thread.currentThread().getName();
         ThreadContext tc = threadContexts.get(tname);
         if (tc == null) {
-            ThreadContext ntc = new ThreadContext();
-            threadContexts.put(tname, ntc);
-            tc = ntc;
+            tc = new ThreadContext();
+            threadContexts.put(tname, tc);
         }
         return tc;
-    }
-
-    private void clearThreadContext()
-    {
-        String tname = Thread.currentThread().getName();
-        threadContexts.remove(tname);
-        return;
     }
 
     @Override
@@ -84,6 +81,10 @@ public class JsSandboxConcurrentEvaluator implements
     public Object exec()
     {
         ThreadContext tc = getThreadContext();
+        if(tc.script == null){
+            tc.script = JsSandboxEvaluators.compile(tc.cx, tc.scope, maps,
+                    requireDirList, source, scriptName);
+        }
         return JsSandboxEvaluators.exec(tc.script, tc.cx, tc.scope, source, scriptName);
     }
 
@@ -112,7 +113,7 @@ public class JsSandboxConcurrentEvaluator implements
     {
         synchronized (this.source) {
             this.source = source;
-            clearThreadContext();
+            getThreadContext().script = null;
             return;
         }
     }

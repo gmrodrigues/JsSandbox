@@ -13,7 +13,6 @@ import java.util.Map;
 
 public class JsSandboxFastEvaluator implements JsSandboxEvaluator
 {
-    private static JsSandboxEvaluator instance;
     private String source = "";
 
     private Map<String, File> maps = new HashMap<String, File>();
@@ -28,12 +27,9 @@ public class JsSandboxFastEvaluator implements JsSandboxEvaluator
 
     private JsSandboxFastEvaluator(){}
 
-    public static JsSandboxEvaluator getInstance()
+    public static JsSandboxEvaluator newInstance()
     {
-        if (instance == null){
-            instance = new JsSandboxFastEvaluator();
-        }
-        return instance;
+        return new JsSandboxFastEvaluator();
     }
 
     private void compile()

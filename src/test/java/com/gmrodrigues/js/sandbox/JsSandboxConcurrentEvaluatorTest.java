@@ -9,12 +9,12 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class JsSandboxFastEvaluatorTest
+public class JsSandboxConcurrentEvaluatorTest
 {
     @Test
     public void testScriptName()
     {
-        JsSandboxEvaluator evaluator = JsSandboxFastEvaluator.newInstance();
+        JsSandboxEvaluator evaluator = JsSandboxConcurrentEvaluator.newInstance();
         String scriptName = "test_script";
         evaluator.setScriptName(scriptName);
         assertThat("testSource: exec must return correct value", evaluator.getScriptName(), is(scriptName));
@@ -23,7 +23,7 @@ public class JsSandboxFastEvaluatorTest
     @Test
     public void testSource()
     {
-        JsSandboxEvaluator evaluator = JsSandboxFastEvaluator.newInstance();
+        JsSandboxEvaluator evaluator = JsSandboxConcurrentEvaluator.newInstance();
         String source = "'Hello ' + 'World'";
         evaluator.setSource(source);
         String result = (String) evaluator.exec();
@@ -34,7 +34,7 @@ public class JsSandboxFastEvaluatorTest
     @Test
     public void testPutVar()
     {
-        JsSandboxEvaluator evaluator = JsSandboxFastEvaluator.newInstance();
+        JsSandboxEvaluator evaluator = JsSandboxConcurrentEvaluator.newInstance();
         evaluator.putVar("name", "Glauber");
         evaluator.setSource("'Hello ' + name");
         String result = (String) evaluator.exec();
@@ -45,7 +45,7 @@ public class JsSandboxFastEvaluatorTest
     @Test
     public void testLoadJs()
     {
-        JsSandboxEvaluator evaluator = JsSandboxFastEvaluator.newInstance();
+        JsSandboxEvaluator evaluator = JsSandboxConcurrentEvaluator.newInstance();
         evaluator.setScriptName("load_test");
         evaluator.loadJs("testdata/js/script.js");
         evaluator.setSource("message");
@@ -57,7 +57,7 @@ public class JsSandboxFastEvaluatorTest
     @Test
     public void testMap()
     {
-        JsSandboxEvaluator evaluator = JsSandboxFastEvaluator.newInstance();
+        JsSandboxEvaluator evaluator = JsSandboxConcurrentEvaluator.newInstance();
         File mapFile = new File("testdata/xml/map.xml");
         evaluator.addXmlMapFile("map", mapFile);
         evaluator.setSource("'Hello ' + map.name");
@@ -75,7 +75,7 @@ public class JsSandboxFastEvaluatorTest
     @Test
     public void testAddClass() throws IllegalAccessException, InvocationTargetException, InstantiationException
     {
-        JsSandboxEvaluator evaluator = JsSandboxFastEvaluator.newInstance();
+        JsSandboxEvaluator evaluator = JsSandboxConcurrentEvaluator.newInstance();
         evaluator.addClass(SayHello.class);
         evaluator.setSource("hello = new SayHello();\nhello.sayHello('Glauber');");
         String result = (String) evaluator.exec();
@@ -85,7 +85,7 @@ public class JsSandboxFastEvaluatorTest
     @Test
     public void testRequire()
     {
-        JsSandboxEvaluator evaluator = JsSandboxFastEvaluator.newInstance();
+        JsSandboxEvaluator evaluator = JsSandboxConcurrentEvaluator.newInstance();
         evaluator.addRequirePath(new File("testdata/js"));
         evaluator.setSource("load('testdata/js/script.js');\nmessage");
         String result = (String) evaluator.exec();

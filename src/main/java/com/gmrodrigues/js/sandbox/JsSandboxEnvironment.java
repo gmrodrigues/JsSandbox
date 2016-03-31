@@ -3,6 +3,7 @@ package com.gmrodrigues.js.sandbox;
 import com.gmrodrigues.js.sandbox.annotation.JsScriptFuntion;
 import com.gmrodrigues.js.sandbox.wrapper.JavaToNativeWrapFactory;
 import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ContextFactory;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 import org.mozilla.javascript.tools.ToolErrorReporter;
@@ -15,6 +16,7 @@ import java.util.List;
 class JsSandboxEnvironment
 {
     public final com.gmrodrigues.js.sandbox.JsScriptFunctionUtils funcs = new com.gmrodrigues.js.sandbox.JsScriptFunctionUtils();
+    private Context cx;
 
     static RuntimeException reportRuntimeError(String msgId)
     {
@@ -30,7 +32,6 @@ class JsSandboxEnvironment
 
     private void initFuncs()
     {
-        Context cx = Context.getCurrentContext();
         // cx.setWrapFactory(new PrimitiveWrapFactory());
         //cx.setWrapFactory(new EnhancedWrapFactory());
         cx.setWrapFactory(new JavaToNativeWrapFactory());
@@ -67,9 +68,9 @@ class JsSandboxEnvironment
 
     public Context getContext()
     {
-        Context cx = Context.getCurrentContext();
         if (cx == null) {
-            cx = Context.enter();
+            ContextFactory contextFactory = new ContextFactory();
+            cx = contextFactory.enterContext();
             initFuncs();
         }
         return cx;
